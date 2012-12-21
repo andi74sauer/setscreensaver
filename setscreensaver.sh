@@ -99,8 +99,6 @@ loggedInUser=`/bin/ls -l /dev/console | /usr/bin/awk '{ print $3 }'`
 # Query dscl to get the currently logged in users home folder 
 loggedInUserHome=`dscl . -read /Users/$loggedInUser | grep NFSHomeDirectory: | /usr/bin/awk '{print $2}'`
 
-# Remove the old screensaver plist, comment out if you only want to amend a part of the plist
-rm -rf "$loggedInUserHome"/Library/Preferences/ByHost/com.apple.screensaver."$macUUID".plist
 
 ###########
 #
@@ -109,6 +107,9 @@ rm -rf "$loggedInUserHome"/Library/Preferences/ByHost/com.apple.screensaver."$ma
 ###########
 
 # Variables for the ~/Library/Preferences/ByHost/com.apple.screensaver."$macUUID".plist
+
+# Remove the old screensaver byhost plist, comment out if you do not wish to edit this file
+rm -rf "$loggedInUserHome"/Library/Preferences/ByHost/com.apple.screensaver."$macUUID".plist
 
 if [[ -n $startTime ]]; then
 	/usr/libexec/PlistBuddy -c "Add :idleTime integer $startTime" "$loggedInUserHome"/Library/Preferences/ByHost/com.apple.screensaver."$macUUID".plist
@@ -133,6 +134,9 @@ fi
 
 # Variables for the ~/Library/Preferences/com.apple.screensaver.plist
 
+# Remove the old screensaver plist, comment out if you do not wish to edit this file
+rm -rf "$loggedInUserHome"/Library/Preferences/com.apple.screensaver.plist
+
 if [[ -n $requirePassword ]]; then
 	/usr/libexec/PlistBuddy -c "Add :askForPassword integer $startTime" "$loggedInUserHome"/Library/Preferences/com.apple.screensaver.plist
 fi
@@ -141,5 +145,5 @@ if [[ -n $timeBeforeRequiringPassword ]]; then
 	/usr/libexec/PlistBuddy -c "Add :askForPasswordDelay integer $timeBeforeRequiringPassword" "$loggedInUserHome"/Library/Preferences/com.apple.screensaver.plist
 fi
 
-#
+# Echo out on completion..
 echo "Set Screen Saver for user: "$loggedInUser"..."
