@@ -132,10 +132,17 @@ if [[ -n $screenSaverPath ]]; then
 	/usr/libexec/PlistBuddy -c "Add :modulePath string $screenSaverPath" "$loggedInUserHome"/Library/Preferences/ByHost/com.apple.screensaver."$macUUID".plist
 fi
 
+
 # Variables for the ~/Library/Preferences/com.apple.screensaver.plist
 
-# Remove the old screensaver plist, comment out if you do not wish to edit this file
-rm -rf "$loggedInUserHome"/Library/Preferences/com.apple.screensaver.plist
+# Set bash to become case-insensitive
+shopt -s nocaseglob
+
+# Remove the all the com.apple.screensaver* plists, with the Case insensitivity this will also remove the iLife etc screen saver plists
+rm -rf "$loggedInUserHome"/Library/Preferences/com.apple.screensaver*
+
+# Set bash to become case-sensitive
+shopt -u nocaseglob
 
 if [[ -n $requirePassword ]]; then
 	/usr/libexec/PlistBuddy -c "Add :askForPassword integer $startTime" "$loggedInUserHome"/Library/Preferences/com.apple.screensaver.plist
