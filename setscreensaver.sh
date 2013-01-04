@@ -138,7 +138,8 @@ fi
 # Set bash to become case-insensitive
 shopt -s nocaseglob
 
-# Remove the all the com.apple.screensaver* plists, with the Case insensitivity this will also remove the iLife etc screen saver plists
+# Remove the all the com.apple.screensaver* plists, with the Case insensitivity this will also remove the Case insenstivity was updated to remove: 
+# com.apple.ScreenSaver.iLifeSlideShows.XX.plist & com.apple.ScreenSaverPhotoChooser.XX.plist saver plists
 rm -rf "$loggedInUserHome"/Library/Preferences/com.apple.screensaver*
 
 # Set bash to become case-sensitive
